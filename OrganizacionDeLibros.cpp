@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#define MAX_TITULO 100
 typedef struct{
 	char nombre[];
 	char autor[];
