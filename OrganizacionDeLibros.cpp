@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include <string.h>
-#include <stbool.h>
+#include <stdbool.h>
 typedef struct{
 	char nombre[];
 	char autor[];
