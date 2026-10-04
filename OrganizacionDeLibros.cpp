@@ -5,7 +5,7 @@
 typedef struct{
 	char nombre[MAX_NOMBRE];
 	char autor[];
-	double precioReposicion;
+	float precioReposicion;
 	int numeroEstante;
 	bool estadoPrestamo;
 }libro;
