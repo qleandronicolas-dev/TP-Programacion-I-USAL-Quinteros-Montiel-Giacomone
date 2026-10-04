@@ -1,9 +1,9 @@
 #include<stdio.h>
 #include <string.h>
 #include <stdbool.h>
-#define MAX_TITULO 100
+#define MAX_NOMBRE 100
 typedef struct{
-	char nombre[];
+	char nombre[MAX_NOMBRE];
 	char autor[];
 	double precioReposicion;
 	int numeroEstante;
