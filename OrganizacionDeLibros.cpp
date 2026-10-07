@@ -51,12 +51,55 @@ int main(){
 	return 0;
 }
 
+int presentacion(int o){
+	printf("===========================\n");
+	printf("===GESTION DE BIBLEOTECA===\n");
+	printf("===========================\n");
+	printf("\n");
+	printf("ELIGA ALGUNA DE LAS SIGUIENTES OPCIONES:\n");
+	printf("\n");
+	printf("1. Llenar datos de los libros.\n");
+	printf("2. Listar datos registrados.");
+	printf("3. Mostrar todos los libros de Borges.\n");
+	printf("4. Separar libros disponibles de no disponibles.\n");
+	printf("0. Finalizar programa.\n");
+	printf("\n");
+	printf("TU RESPUESTA: ");
+	scanf("%d", o);                         //no estoy del todo seguro si esto esta bien, tengo q crear una variable nueva? creo que puedo usar punteros
+	return o;
+}
+
 void menu(){
-	//aca hacemos un switch
-	//ocpion de llenar archivo con los libros de los estantes con tooooodos sus datos(validados)
-	//opcion para listar todo lo del archivo
-	//opcion para mostrar los libros de "BORGES"(validar) y sus datos
-	//opcion para separar en dos archivos los libros disponibles(estadoPrestamo==true) y no disponibles(estadoPrestamo==false)
-	//opcion para salir
+	int opcion = -1;                //no se si esto es nesesario
+	//aca hacemos un switch         //
+	opcion = presentacion(opcion);  //teniendo esto
+	while(opcion!=0){
+		switch(opcion){
+			case 1:{
+				//ocpion de llenar archivo con los libros de los estantes con tooooodos sus datos(validados)
+				break;
+			}
+			case 2:{
+				//opcion para listar todo lo del archivo
+				break;
+			}
+			case 3:{
+				//opcion para mostrar los libros de "BORGES"(validar) y sus datos
+				break;
+			}
+			case 4:{
+				//opcion para separar en dos archivos los libros disponibles(estadoPrestamo==true) y no disponibles(estadoPrestamo==false)
+				break;
+			}
+			case 0:{
+				//opcion para salir
+				break;
+			}
+			default:{
+				printf("OPCION NO VALIDA.\n\n");
+				break;
+			}
+		}
+ }
 	return;
 }
