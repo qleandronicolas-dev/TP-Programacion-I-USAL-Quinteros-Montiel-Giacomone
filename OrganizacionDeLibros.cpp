@@ -10,40 +10,9 @@ typedef struct{
 	int numeroEstante;
 	bool estadoPrestamo;
 }libro;
+//    -PROTOTIPOS-
+libro cargarLibroValidado(void);
 
-libro cargarLibroValidado(void) {
-    libro l;
-    int prestamoRespuesta;
- 
-    do {
-        printf("  Nombre del libro: ");
-        fgets(l.nombre, MAX_NOMBRE, stdin);
-        l.nombre[strcspn(l.nombre, "\n")] = '\0';
-    } while (strlen(l.nombre) == 0);
- 
-    do {
-        printf("  Autor: ");
-        fgets(l.autor, MAX_NOMBRE, stdin);
-        l.autor[strcspn(l.autor, "\n")] = '\0';
-    } while (strlen(l.autor) == 0);
-
-	//no entendi lo de estante
-    do {
-        printf("  Precio de reposicion (mayor a 0): ");
-        scanf("%f", &l.precioReposicion);
-    } while (l.precioReposicion <= 0);
- 
-    do {
-        printf("  Esta disponible? (1 = si / 0 = no): ");
-        scanf("%d", &prestamoRespuesta);
-    } while (prestamoRespuesta != 0 && prestamoRespuesta != 1);
- 
-    l.estadoPrestamo = (prestamoRespuesta == 1);
- 
-    getchar(); 
- 
-    return l;
-}
 void menu();
 
 int main(){
@@ -68,7 +37,39 @@ int presentacion(int o){
 	scanf("%d", o);                         //no estoy del todo seguro si esto esta bien, tengo q crear una variable nueva? creo que puedo usar punteros
 	return o;
 }
-
+libro cargarLibroValidado(void) {
+    libro l;
+    int prestamoRespuesta;
+ 
+    do {
+        printf("Ingrese el nombre del libro: ");
+        fgets(l.nombre, MAX_NOMBRE, stdin);
+        l.nombre[strcspn(l.nombre, "\n")] = '\0';
+    } while (strlen(l.nombre) == 0);
+ 
+    do {
+        printf("ingrese el autor del libro: ");
+        fgets(l.autor, MAX_NOMBRE, stdin);
+        l.autor[strcspn(l.autor, "\n")] = '\0';
+    } while (strlen(l.autor) == 0);
+ 
+    do {
+        printf("  ingrese un precio de reposicion (mayor a 0): ");
+        scanf("%f", &l.precioReposicion);
+    } while (l.precioReposicion <= 0);
+ //NO ENTENDÍ LO DE ESTANTE
+	
+    do {
+        printf("  Esta disponible? (1 = si / 0 = no): ");
+        scanf("%d", &prestamoRespuesta);
+    } while (prestamoRespuesta != 0 && prestamoRespuesta != 1);
+ 
+    l.estadoPrestamo = (prestamoRespuesta == 1);
+ 
+    getchar(); 
+ 
+    return l;
+}
 void menu(){
 	int opcion = -1;                //no se si esto es nesesario
 	//aca hacemos un switch         //
@@ -76,6 +77,7 @@ void menu(){
 	while(opcion!=0){
 		switch(opcion){
 			case 1:{
+				
 				//ocpion de llenar archivo con los libros de los estantes con tooooodos sus datos(validados)
 				break;
 			}
