@@ -25,7 +25,7 @@ int presentacion(int o){
 	printf("===GESTION DE BIBLEOTECA===\n");
 	printf("===========================\n");
 	printf("\n");
-	printf("ELIGA ALGUNA DE LAS SIGUIENTES OPCIONES:\n");
+	printf("ELIJA ALGUNA DE LAS SIGUIENTES OPCIONES:\n");
 	printf("\n");
 	printf("1. Llenar datos de los libros.\n");
 	printf("2. Listar datos registrados.");
