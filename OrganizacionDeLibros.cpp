@@ -4,6 +4,9 @@
 #include <ctype.h>
 #define MAX_NOMBRE 100
 #define ARCHIVO "libros.txt"
+#define ESTANTE_MIN 1
+#define ESTANTE_MAX 50
+
 typedef struct{
 	char nombre[MAX_NOMBRE];
 	char autor[MAX_NOMBRE];
@@ -49,7 +52,12 @@ libro cargarLibroValidado(void) {
         fgets(l.nombre, MAX_NOMBRE, stdin);
         l.nombre[strcspn(l.nombre, "\n")] = '\0';
     } while (strlen(l.nombre) == 0);
- 
+
+	do {
+        printf("  Ingrese el numero de estante (%d a %d): ", ESTANTE_MIN, ESTANTE_MAX);
+        scanf("%d", &l.numeroEstante);
+    } while (l.numeroEstante < ESTANTE_MIN || l.numeroEstante > ESTANTE_MAX);
+	
     do {
         printf("ingrese el autor del libro: ");
         fgets(l.autor, MAX_NOMBRE, stdin);
@@ -60,7 +68,6 @@ libro cargarLibroValidado(void) {
         printf("  ingrese un precio de reposicion (mayor a 0): ");
         scanf("%f", &l.precioReposicion);
     } while (l.precioReposicion <= 0);
- //NO ENTENDÍ LO DE ESTANTE
 	
     do {
         printf("  Esta disponible? (1 = si / 0 = no): ");
