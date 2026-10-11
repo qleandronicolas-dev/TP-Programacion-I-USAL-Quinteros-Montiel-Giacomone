@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 #define MAX_NOMBRE 100
+#define ARCHIVO "libros.txt"
 typedef struct{
 	char nombre[MAX_NOMBRE];
 	char autor[MAX_NOMBRE];
@@ -12,6 +13,8 @@ typedef struct{
 }libro;
 //    -PROTOTIPOS-
 libro cargarLibroValidado(void);
+void agregarLibroArchivo(void);
+void ListarLibros (void);
 
 void menu();
 
@@ -77,7 +80,7 @@ void menu(){
 	while(opcion!=0){
 		switch(opcion){
 			case 1:{
-				
+				agregarLibroArchivo();
 				//ocpion de llenar archivo con los libros de los estantes con tooooodos sus datos(validados)
 				break;
 			}
@@ -105,3 +108,26 @@ void menu(){
  }
 	return;
 }
+	
+void agregarLibroArchivo(void){
+FILE *archivo;
+libro l;
+
+
+archivo = fopen(ARCHIVO, "a");
+if(archivo == NULL){
+printf("Error al abrir el archivo\n");
+return;
+}
+l =	cargarLibroValidado();
+
+fprintf(archivo, "%s;%s;%.2f;%d;%d\n", l.nombre,l.autor,l.precioReposicion,l.numeroEstante,l.estadoPrestamo);
+
+fclose(archivo);
+
+printf("libro guardado correctamente\n");
+}
+
+
+
+
