@@ -112,8 +112,6 @@ void menu(){
 void agregarLibroArchivo(void){
 FILE *archivo;
 libro l;
-
-
 archivo = fopen(ARCHIVO, "a");
 if(archivo == NULL){
 printf("Error al abrir el archivo\n");
