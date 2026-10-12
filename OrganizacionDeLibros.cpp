@@ -18,7 +18,7 @@ typedef struct{
 libro cargarLibroValidado(void);
 void agregarLibroArchivo(void);
 void ListarLibros (void);
-
+void salir(void);
 void menu();
 
 int main(){
@@ -131,6 +131,9 @@ fprintf(archivo, "%s;%s;%.2f;%d;%d\n", l.nombre,l.autor,l.precioReposicion,l.num
 fclose(archivo);
 
 printf("libro guardado correctamente\n");
+}
+void salir(void) {
+    printf("el programa finalizo\n");
 }
 
 
