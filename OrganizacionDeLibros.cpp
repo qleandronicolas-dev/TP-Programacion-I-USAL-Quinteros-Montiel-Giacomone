@@ -17,7 +17,7 @@ typedef struct{
 //    -PROTOTIPOS-
 libro cargarLibroValidado(void);
 void agregarLibroArchivo(void);
-void ListarLibros (void);
+void listarLibros (void);
 void salir(void);
 void menu();
 
@@ -92,6 +92,7 @@ void menu(){
 				break;
 			}
 			case 2:{
+			 listarLibros();
 				//opcion para listar todo lo del archivo
 				break;
 			}
@@ -142,11 +143,24 @@ libro l;
 int estado;
 int cantidad=0;
 archivo = fopen(ARCHIVO,"r");
-if(ARCHIVO==NULL){
+if(archivo==NULL){
 printf("No se pudo abrir el archivo");
 return;
 }
-while(fscanf(archivo,
+while(fscanf(archivo," %99[^;];%99[^;];%f;%d;%d",  l.nombre,l.autor,&l.precioReposicion,&l.numeroEstante,&estado) == 5){
+l.estadoPrestamo=estado;
+printf("\nNomnre: %s\n", l.nombre);
+printf("Autor: %s\n", l.autor);
+printf("Precio de reposicion: %.2f\n", l.precioReposicion);
+printf("Numero de estante: %d\n", l.numeroEstante);
+printf("Disponible: %s\n", l.estadoPrestamo?"SI" : "NO");
+cantidad++;
+}
+if(cantidad==0){
+printf("No hay libros guardados\n");
+	}
+fclose(archivo);
+}
 
 
 
