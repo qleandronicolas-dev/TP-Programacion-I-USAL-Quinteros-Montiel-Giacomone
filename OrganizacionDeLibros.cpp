@@ -136,6 +136,18 @@ void salir(void) {
     printf("el programa finalizo\n");
 }
 
+void listarLibros(void){
+	FILE *archivo;
+libro l;
+int estado;
+int cantidad=0;
+archivo = fopen(ARCHIVO,"r");
+if(ARCHIVO==NULL){
+printf("No se pudo abrir el archivo");
+return;
+}
+while(fscanf(archivo,
+
 
 
 
