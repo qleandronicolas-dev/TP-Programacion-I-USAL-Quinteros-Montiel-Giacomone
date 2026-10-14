@@ -3,10 +3,9 @@
 #include <stdbool.h>
 #include <ctype.h>
 #define MAX_NOMBRE 100
-#define ARCHIVO "libros.txt"
 #define ESTANTE_MIN 1
 #define ESTANTE_MAX 50
-
+// --------- ESTRUCTURA ---------
 typedef struct{
 	char nombre[MAX_NOMBRE];
 	char autor[MAX_NOMBRE];
@@ -14,34 +13,33 @@ typedef struct{
 	int numeroEstante;
 	bool estadoPrestamo;
 }libro;
-//    -PROTOTIPOS-
+// --------- DECLARACIONES ---------
 libro cargarLibroValidado(void);
 void agregarLibroArchivo(void);
 void listarLibros (void);
-void salir(void);
-void menu();
-
+void librosBorges(void);
+void dividirLibrosDisponibles(void);
+void menu(void);
+// --------- MAIN ---------
 int main(){
-	menu();   //creo que el main no nesecita nada mas
+	menu();
 	return 0;
 }
-
-int presentacion(int o){
-	printf("===========================\n");
-	printf("===GESTION DE BIBLEOTECA===\n");
-	printf("===========================\n");
-	printf("\n");
-	printf("ELIJA ALGUNA DE LAS SIGUIENTES OPCIONES:\n");
-	printf("\n");
-	printf("1. Llenar datos de los libros.\n");
-	printf("2. Listar datos registrados.");
-	printf("3. Mostrar todos los libros de Borges.\n");
-	printf("4. Separar libros disponibles de no disponibles.\n");
-	printf("0. Finalizar programa.\n");
-	printf("\n");
-	printf("TU RESPUESTA: ");
-	scanf("%d", o);                         //no estoy del todo seguro si esto esta bien, tengo q crear una variable nueva? creo que puedo usar punteros
-	return o;
+// --------- FUNCIONES ---------
+int presentacion(void){
+    int o;
+    printf("===========================\n");
+    printf("=== GESTION DE BIBLIOTECA ===\n");
+    printf("===========================\n\n");
+    printf("1. Llenar datos de los libros.\n");
+    printf("2. Listar datos registrados.\n");
+    printf("3. Mostrar todos los libros de Borges.\n");
+    printf("4. Separar libros disponibles de no disponibles.\n");
+    printf("0. Finalizar programa.\n\n");
+    printf("TU RESPUESTA: ");
+    scanf("%d", &o);
+    getchar();
+    return o;
 }
 libro cargarLibroValidado(void) {
     libro l;
@@ -80,47 +78,38 @@ libro cargarLibroValidado(void) {
  
     return l;
 }
-void menu(){
-	int opcion = -1;                //no se si esto es nesesario
-	//aca hacemos un switch         //
-	opcion = presentacion(opcion);  //teniendo esto
-	while(opcion!=0){
-		switch(opcion){
-			case 1:{
-				agregarLibroArchivo();
-				//ocpion de llenar archivo con los libros de los estantes con tooooodos sus datos(validados)
-				break;
-			}
-			case 2:{
-			 listarLibros();
-				//opcion para listar todo lo del archivo
-				break;
-			}
-			case 3:{
-				//opcion para mostrar los libros de "BORGES"(validar) y sus datos
-				break;
-			}
-			case 4:{
-				//opcion para separar en dos archivos los libros disponibles(estadoPrestamo==true) y no disponibles(estadoPrestamo==false)
-				break;
-			}
-			case 0:{
-				//opcion para salir
-				break;
-			}
-			default:{
-				printf("OPCION NO VALIDA.\n\n");
-				break;
-			}
-		}
- }
-	return;
+void menu(void){
+    int opcion;
+    do{
+        opcion = presentacion();
+        switch (opcion){
+            case 1:
+                agregarLibroArchivo();
+                break;
+            case 2:
+                listarLibros();
+                break;
+            case 3:
+                librosBorges();
+                break;
+            case 4:
+                dividirLibrosDisponibles();
+                break;
+            case 0:
+                printf("El programa finalizo.\n");
+                break;
+            default:
+                printf("OPCION NO VALIDA.\n\n");
+                break;
+        }
+    } while (opcion != 0);
+    return;
 }
 	
 void agregarLibroArchivo(void){
 FILE *archivo;
 libro l;
-archivo = fopen(ARCHIVO, "a");
+archivo = fopen("libros.txt", "a");
 if(archivo == NULL){
 printf("Error al abrir el archivo\n");
 return;
@@ -133,16 +122,13 @@ fclose(archivo);
 
 printf("libro guardado correctamente\n");
 }
-void salir(void) {
-    printf("el programa finalizo\n");
-}
 
 void listarLibros(void){
 	FILE *archivo;
 libro l;
 int estado;
 int cantidad=0;
-archivo = fopen(ARCHIVO,"r");
+archivo = fopen("libros.txt","r");
 if(archivo==NULL){
 printf("No se pudo abrir el archivo");
 return;
@@ -162,6 +148,25 @@ printf("No hay libros guardados\n");
 fclose(archivo);
 }
 
+void dividirLibrosDisponibles(void){
+    FILE *archivo = fopen("libros.txt", "r");
+    FILE *disp = fopen("disponibles.txt", "w");
+    FILE *nodisp = fopen("nodisponibles.txt", "w");
+    libro l;
+    int estado;
 
-
-
+    if(archivo != NULL && disp != NULL && nodisp != NULL){
+        while (fscanf(archivo," %99[^;];%99[^;];%f;%d;%d", l.nombre, l.autor, &l.precioReposicion, &l.numeroEstante, &estado) == 5){
+            l.estadoPrestamo = estado;
+            FILE *destino = l.estadoPrestamo ? disp : nodisp;
+            fprintf(destino,"%s;%s;%.2f;%d;%d\n", l.nombre, l.autor, l.precioReposicion, l.numeroEstante, l.estadoPrestamo);
+        }
+        fclose(archivo);
+        fclose(disp);
+        fclose(nodisp);
+        printf("Archivos separados correctamente.\n");
+    }else{
+        printf("Error al abrir archivos\n");
+    }
+    return;
+}
