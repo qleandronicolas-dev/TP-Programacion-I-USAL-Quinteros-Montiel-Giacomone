@@ -167,3 +167,23 @@ void dividirLibrosDisponibles(void){
     }
     return;
 }
+void librosBorges(void){
+	FILE *archivo = fopen("libros.txt", "r");
+libro l;
+int estado;
+if(archivo==NULL){
+printf("No se pudo abrir el archivo");
+}else{
+printf("\nLibros Borges\n");
+while(fscanf(archivo," %99[^;];%99[^;];%f;%d;%d", l.nombre, l.autor, &l.precioReposicion, &l.numeroEstante, &estado) == 5){
+l.estadoPrestamo = estado;
+	if(strcmp(l.autor, "Borges") == 0){
+printf("\nNombre: %s\n", l.nombre);
+printf("Numero de estante: %d\n", l.numeroEstante);
+printf("Disponible: %s\n", l.estadoPrestamo?"SI" : "NO");
+	}
+}
+
+fclose(archivo);
+}
+}
