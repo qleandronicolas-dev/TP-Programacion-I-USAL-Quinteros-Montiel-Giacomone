@@ -14,6 +14,7 @@ typedef struct{
 	bool estadoPrestamo;
 }libro;
 // --------- DECLARACIONES ---------
+void convertirMayusculas(char*);
 libro cargarLibroValidado(void);
 void agregarLibroArchivo(void);
 void listarLibros (void);
@@ -26,6 +27,13 @@ int main(){
 	return 0;
 }
 // --------- FUNCIONES ---------
+void convertirMayusculas(char *cadena){
+    int i;
+    for(i = 0; cadena[i] != '\0'; i++){
+        cadena[i] = toupper((unsigned char)cadena[i]);
+    }
+}
+
 int presentacion(void){
     int o;
     printf("===========================\n");
@@ -51,12 +59,14 @@ libro cargarLibroValidado(void){
         fgets(l.nombre, MAX_NOMBRE, stdin);
         l.nombre[strcspn(l.nombre, "\n")] = '\0';
     } while (strlen(l.nombre) == 0);
+    convertirMayusculas(l.nombre);
 
     do{
         printf("Ingrese el autor del libro: ");
         fgets(l.autor, MAX_NOMBRE, stdin);
         l.autor[strcspn(l.autor, "\n")] = '\0';
     } while (strlen(l.autor) == 0);
+    convertirMayusculas(l.autor);
 
     do{
         printf("Ingrese el numero de estante (%d a %d): ", ESTANTE_MIN, ESTANTE_MAX);
@@ -177,7 +187,7 @@ void librosBorges(void){
 		printf("\nLibros Borges\n");
 		while(fscanf(archivo," %99[^;];%99[^;];%f;%d;%d", l.nombre, l.autor, &l.precioReposicion, &l.numeroEstante, &estado) == 5){
 			l.estadoPrestamo = estado;
-			if(strcmp(l.autor, "Borges") == 0){
+			if(strcmp(l.autor, "BORGES") == 0){
 				printf("\nNombre: %s\n", l.nombre);
 				printf("Precio de reposicion: %.2f\n", l.precioReposicion);
 				printf("Numero de estante: %d\n", l.numeroEstante);
