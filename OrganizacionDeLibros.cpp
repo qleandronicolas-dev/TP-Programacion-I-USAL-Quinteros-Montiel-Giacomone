@@ -41,6 +41,7 @@ int presentacion(void){
     getchar();
     return o;
 }
+
 libro cargarLibroValidado(void){
     libro l;
     int prestamoRespuesta;
@@ -76,6 +77,7 @@ libro cargarLibroValidado(void){
     getchar();
     return l;
 }
+
 void menu(void){
     int opcion;
     do{
@@ -105,46 +107,44 @@ void menu(void){
 }
 	
 void agregarLibroArchivo(void){
-FILE *archivo;
-libro l;
-archivo = fopen("libros.txt", "a");
-if(archivo == NULL){
-printf("Error al abrir el archivo\n");
-}else{
-l =	cargarLibroValidado();
-
-fprintf(archivo, "%s;%s;%.2f;%d;%d\n", l.nombre,l.autor,l.precioReposicion,l.numeroEstante,l.estadoPrestamo);
-
-fclose(archivo);
-
-printf("libro guardado correctamente\n");
+	FILE *archivo;
+	libro l;
+	archivo = fopen("libros.txt", "a");
+	if(archivo == NULL){
+		printf("Error al abrir el archivo\n");
+	}else{
+		l =	cargarLibroValidado();
+		fprintf(archivo, "%s;%s;%.2f;%d;%d\n", l.nombre,l.autor,l.precioReposicion,l.numeroEstante,l.estadoPrestamo);
+		fclose(archivo);
+		printf("libro guardado correctamente\n");
+	}
 }
-}
+
 void listarLibros(void){
 	FILE *archivo;
-libro l;
-int estado;
-int cantidad=0;
-archivo = fopen("libros.txt","r");
-if(archivo==NULL){
-printf("No se pudo abrir el archivo");
-}else{
-while(fscanf(archivo," %99[^;];%99[^;];%f;%d;%d",  l.nombre,l.autor,&l.precioReposicion,&l.numeroEstante,&estado) == 5){
-l.estadoPrestamo=estado;
-printf("\nNombre: %s\n", l.nombre);
-printf("Autor: %s\n", l.autor);
-printf("Precio de reposicion: %.2f\n", l.precioReposicion);
-printf("Numero de estante: %d\n", l.numeroEstante);
-printf("Disponible: %s\n", l.estadoPrestamo?"SI" : "NO");
-cantidad++;
+	libro l;
+	int estado;
+	int cantidad=0;
+	archivo = fopen("libros.txt","r");
+	if(archivo==NULL){
+		printf("No se pudo abrir el archivo");
+	}else{
+		while(fscanf(archivo," %99[^;];%99[^;];%f;%d;%d",  l.nombre,l.autor,&l.precioReposicion,&l.numeroEstante,&estado) == 5){
+			l.estadoPrestamo=estado;
+			printf("\nNombre: %s\n", l.nombre);
+			printf("Autor: %s\n", l.autor);
+			printf("Precio de reposicion: %.2f\n", l.precioReposicion);
+			printf("Numero de estante: %d\n", l.numeroEstante);
+			printf("Disponible: %s\n", l.estadoPrestamo?"SI" : "NO");
+			cantidad++;
+		}
+		if(cantidad==0){
+			printf("No hay libros guardados\n");
+		}
+		fclose(archivo);
+	}
 }
 
-if(cantidad==0){
-printf("No hay libros guardados\n");
-	}
-fclose(archivo);
-}
-}
 void dividirLibrosDisponibles(void){
     FILE *archivo = fopen("libros.txt", "r");
     FILE *disp = fopen("disponibles.txt", "w");
@@ -169,21 +169,21 @@ void dividirLibrosDisponibles(void){
 }
 void librosBorges(void){
 	FILE *archivo = fopen("libros.txt", "r");
-libro l;
-int estado;
-if(archivo==NULL){
-printf("No se pudo abrir el archivo");
-}else{
-printf("\nLibros Borges\n");
-while(fscanf(archivo," %99[^;];%99[^;];%f;%d;%d", l.nombre, l.autor, &l.precioReposicion, &l.numeroEstante, &estado) == 5){
-l.estadoPrestamo = estado;
-	if(strcmp(l.autor, "Borges") == 0){
-printf("\nNombre: %s\n", l.nombre);
-printf("Numero de estante: %d\n", l.numeroEstante);
-printf("Disponible: %s\n", l.estadoPrestamo?"SI" : "NO");
+	libro l;
+	int estado;
+	if(archivo==NULL){
+		printf("No se pudo abrir el archivo");
+	}else{
+		printf("\nLibros Borges\n");
+		while(fscanf(archivo," %99[^;];%99[^;];%f;%d;%d", l.nombre, l.autor, &l.precioReposicion, &l.numeroEstante, &estado) == 5){
+			l.estadoPrestamo = estado;
+			if(strcmp(l.autor, "Borges") == 0){
+				printf("\nNombre: %s\n", l.nombre);
+				printf("Precio de reposicion: %.2f\n", l.precioReposicion);
+				printf("Numero de estante: %d\n", l.numeroEstante);
+				printf("Disponible: %s\n", l.estadoPrestamo?"SI" : "NO");
+			}
+		}
+		fclose(archivo);
 	}
-}
-
-fclose(archivo);
-}
 }
